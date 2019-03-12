@@ -1,7 +1,7 @@
 const { Discord, Client, RichEmbed, Attachment } = require("discord.js");
 const client = new Client({disableEveryone: true});
-const Canvas = require('canvas');
-const snekfetch = require('snekfetch');
+const Canvas = require("canvas");
+const snekfetch = require("snekfetch");
 
 
 
