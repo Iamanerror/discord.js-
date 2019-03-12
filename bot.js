@@ -8,9 +8,23 @@ const snekfetch = require('snekfetch');
 client.on("ready", () => {
 
   console.log(`Logged in as ${client.user.username}!`);
+	
+});
+
+
+
+const applyText = (canvas, text) => {
+	const ctx = canvas.getContext('2d');
+	let fontSize = 70;
+
+	do {
+		ctx.font = `${fontSize -= 10}px sans-serif`;
+	} while (ctx.measureText(text).width > canvas.width - 300);
+
+	return ctx.font;
+};	
 
   
-});
 
 client.on('guildMemberAdd', async member => {
 	const channel = member.guild.channels.find(ch => ch.name === 'welcome');
