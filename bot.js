@@ -5,8 +5,7 @@ client.on("ready", () => {
 
   console.log(`Logged in as ${client.user.username}!`);
 
-  client.user.setActivity('YouTube', { type: "WATCHING" })
-
+  
 });
 
 client.on('guildMemberAdd', member => {
