@@ -8,6 +8,9 @@
         "start": "node bot.js"
     },
     "dependencies": {
-	"discord.js" : "11.2.1"
+	"discord.js" : "11.2.1",
+	"canvas" : "2.0.1",
+	"node-superfetch" : "0.1.9"
+	   
 	}
 }
