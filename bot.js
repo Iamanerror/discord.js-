@@ -2,7 +2,6 @@ const { Discord, Client, RichEmbed, Attachment } = require("discord.js");
 const client = new Client({disableEveryone: true});
 const Canvas = require("canvas");
 const snekfetch = require("snekfetch");
-let coins = require("./coins.json");
 
 
 
@@ -60,35 +59,8 @@ client.on('guildMemberAdd', async member => {
 	const attachment = new Discord.Attachment(canvas.toBuffer(), 'welcome-image.png');
 
 	channel.send(`Welcome to the server, ${member}!`, attachment);
-});
 
 
-
-
-if(!coins[message.author.id]){
-    coins[message.author.id] = {
-      coins: 0
-    };
-  }
-
-  let coinAmt = Math.floor(Math.random() * 15) + 1;
-  let baseAmt = Math.floor(Math.random() * 15) + 1;
-  console.log(`${coinAmt} ; ${baseAmt}`);
-
-  if(coinAmt === baseAmt){
-    coins[message.author.id] = {
-      coins: coins[message.author.id].coins + coinAmt
-    };
-  fs.writeFile("./coins.json", JSON.stringify(coins), (err) => {
-    if (err) console.log(err)
-  });
-  let coinEmbed = new Discord.RichEmbed()
-  .setAuthor(message.author.username)
-  .setColor("#0000FF")
-  .addField("💸", `${coinAmt} coins added!`);
-
-  message.channel.send(coinEmbed).then(msg => {msg.delete(5000)});
-  }
 
 
 });
