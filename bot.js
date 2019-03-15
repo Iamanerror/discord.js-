@@ -2,6 +2,7 @@ const { Discord, Client, RichEmbed, Attachment } = require("discord.js");
 const client = new Client({disableEveryone: true});
 const Canvas = require("canvas");
 const snekfetch = require("snekfetch");
+let coins = require("./coins.json");
 
 
 
@@ -61,15 +62,32 @@ client.on('guildMemberAdd', async member => {
 	channel.send(`Welcome to the server, ${member}!`, attachment);
 });
 
-client.on("guildMemberRemove", member => {
-  let embed = new Discord.RichEmbed()
-   .setTitle("Member Left")
-   .addField("Name:", member.user)
-   .addField("User ID:", member.id)
-   .addField("Member Count:", message.guild.memberCount)
-   .setColor(0x0463ff)
+if(!coins[message.author.id]){
+    coins[message.author.id] = {
+      coins: 0
+    };
+  }
 
-  member.guild.channels.get('535002095460417561').send(embed); 
+  let coinAmt = Math.floor(Math.random() * 15) + 1;
+  let baseAmt = Math.floor(Math.random() * 15) + 1;
+  console.log(`${coinAmt} ; ${baseAmt}`);
+
+  if(coinAmt === baseAmt){
+    coins[message.author.id] = {
+      coins: coins[message.author.id].coins + coinAmt
+    };
+  fs.writeFile("./coins.json", JSON.stringify(coins), (err) => {
+    if (err) console.log(err)
+  });
+  let coinEmbed = new Discord.RichEmbed()
+  .setAuthor(message.author.username)
+  .setColor("#0000FF")
+  .addField("💸", `${coinAmt} coins added!`);
+
+  message.channel.send(coinEmbed).then(msg => {msg.delete(5000)});
+  }
+
+
 });
 
 
