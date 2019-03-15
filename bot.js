@@ -116,6 +116,4 @@ message.channel.send(`Hoold on!`).then(m => {
 
  }
 
-});
-
 client.login(process.env.BOT_TOKEN)
