@@ -60,7 +60,10 @@ client.on('guildMemberAdd', async member => {
 	const attachment = new Discord.Attachment(canvas.toBuffer(), 'welcome-image.png');
 
 	channel.send(`Welcome to the server, ${member}!`, attachment);
-});
+}
+
+
+
 
 if(!coins[message.author.id]){
     coins[message.author.id] = {
