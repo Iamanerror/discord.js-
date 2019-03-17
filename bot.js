@@ -1,17 +1,12 @@
-const { Discord, Client, RichEmbed, Attachment } = require("discord.js");
-const client = new Client({disableEveryone: true});
-const Canvas = require("canvas");
-const snekfetch = require("snekfetch");
+const Discord = require('discord.js');
+const Canvas = require('canvas');
+const snekfetch = require('snekfetch');
 
+const client = new Discord.Client();
 
-
-client.on("ready", () => {
-
-  console.log(`Logged in as ${client.user.username}!`);
-	
+client.once('ready', () => {
+	console.log('Ready!');
 });
-
-
 
 const applyText = (canvas, text) => {
 	const ctx = canvas.getContext('2d');
@@ -22,12 +17,10 @@ const applyText = (canvas, text) => {
 	} while (ctx.measureText(text).width > canvas.width - 300);
 
 	return ctx.font;
-};	
-
-  
+};
 
 client.on('guildMemberAdd', async member => {
-	const channel = member.guild.channels.find(ch => ch.name === 'welcome');
+	const channel = member.guild.channels.find(ch => ch.name === 'member-log');
 	if (!channel) return;
 
 	const canvas = Canvas.createCanvas(700, 250);
@@ -59,33 +52,16 @@ client.on('guildMemberAdd', async member => {
 	const attachment = new Discord.Attachment(canvas.toBuffer(), 'welcome-image.png');
 
 	channel.send(`Welcome to the server, ${member}!`, attachment);
-
-
-
-
 });
 
-
-client.on("message", async message => {
-    
-    let prefix = "t.";
-
-const args = message.content.slice(prefix.length).trim().split(/\s+/g);
-
-const command = args.shift().toLowerCase();
-    
-    if(!message.content.startsWith(prefix) || message.author.bot) return;
+client.on('message', async message => {
+	if (message.content === '!join') {
+		client.emit('guildMemberAdd', message.member || await message.guild.fetchMember(message.author));
+	}
+});
+		
+	
 
 
-
-if(command === 'ping') {
-
-message.channel.send(`Hoold on!`).then(m => {
-
-    m.edit(`🏓  ::  **Pong!** (Roundtrip took: **` + (m.createdTimestamp - message.createdTimestamp) + `ms.** Heartbeat: **` + Math.round(client.ping) + `ms.**)`);
-
-    });
-
- }
 
 client.login(process.env.BOT_TOKEN)
